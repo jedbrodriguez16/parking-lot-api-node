@@ -12,11 +12,15 @@ export default class ParkingLotController {
   private readonly _parkingLotService: IParkingLotService;
 
   @httpPost("/car/park")
-  public parkCar(req: express.Request) {
+  public parkCar(req: express.Request, res: express.Response) {
     let request = req.body || {};
     let car: Car = request;
 
-    return this._parkingLotService.parkCar(car);
+    try {
+      return this._parkingLotService.parkCar(car);
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
   }
 
   @httpPost("/car/unpark")
@@ -34,10 +38,14 @@ export default class ParkingLotController {
   }
 
   @httpGet("/slot/info")
-  public getParkingSlotInfo(req: express.Request) {
+  public getParkingSlotInfo(req: express.Request, res: express.Response) {
     let request = req.query || {};
     let { number } = request;
 
-    return this._parkingLotService.getParkingSlotInfo(number);
+    try {
+      return this._parkingLotService.getParkingSlotInfo(number);
+    } catch (err) {
+      res.status(404).json({ error: err.message });
+    }
   }
 }

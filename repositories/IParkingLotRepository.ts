@@ -1,7 +1,10 @@
-import ParkingSlotInfo from "./models/ParkingSlotInfo";
+import ParkingSlotInfoModel from "./models/ParkingSlotInfoModel";
 
 export default interface IParkingLotRepository {
-  assignSlot(carNumber: string): number;
-  freeSlot(slotNumber: number): boolean;
-  getSlotInfo(slotOrCarNumber: number | string): ParkingSlotInfo;
+  assignSlot(slotNumber: string, carNumber: string): void;
+  freeSlot(slotNumber: string): void;
+  getSlotInfo(slotOrCarNumber: string): ParkingSlotInfoModel;
+  getNearestAvailableSlot(): string;
+  isValidSlot(slotNumber: string): boolean;
+  isCarAlreadyParked(carNumber: string): boolean;
 }

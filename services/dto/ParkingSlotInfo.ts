@@ -1,4 +1,4 @@
 export default class ParkingSlotInfo {
   carNumber: string;
-  slotNumber: number;
+  slotNumber: string;
 }

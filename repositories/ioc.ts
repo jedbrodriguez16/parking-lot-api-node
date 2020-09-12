@@ -1,6 +1,6 @@
 import { Container } from "inversify";
 import IParkingLotRepository from "./IParkingLotRepository";
-import ParkingLotRepository from "./impl/ParkingLotRepository";
+import ParkingLotRepository from "./impl/ParkingLotMemoryRepository";
 import types from "./types";
 
 export default function configureRepositories(container: Container) {

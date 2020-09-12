@@ -1,3 +1,3 @@
 export default class ParkingSlot {
-  constructor(public slotNumber: number) {}
+  constructor(public slotNumber: string) {}
 }

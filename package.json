@@ -11,6 +11,7 @@
   "author": "Jed Rodriguez",
   "license": "ISC",
   "dependencies": {
+    "class-transformer": "^0.3.1",
     "express": "^4.17.1",
     "inversify": "^5.0.1",
     "inversify-express-utils": "^6.3.2",
