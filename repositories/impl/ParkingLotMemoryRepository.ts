@@ -6,9 +6,8 @@ import ParkingSlotInfoModel from "../models/ParkingSlotInfoModel";
 export default class ParkingLotRepository implements IParkingLotRepository {
   private _parkingSlots: Map<string, string> = new Map<string, string>();
 
-  constructor() {
-    // todo: pass size from config
-    this._initParkingSlots(10);
+  constructor(size: number) {
+    this._initParkingSlots(size);
   }
 
   assignSlot(slotNumber: string, carNumber: string): void {

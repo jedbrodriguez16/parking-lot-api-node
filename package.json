@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "class-transformer": "^0.3.1",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-limiter": "^1.6.1",
     "express-rate-limit": "^5.1.3",
