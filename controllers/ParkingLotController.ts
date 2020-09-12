@@ -18,15 +18,11 @@ export default class ParkingLotController {
     body("registrationNumber", "registrationNumber is missing").not().isEmpty(),
     validateRequest()
   )
-  public parkCar(req: express.Request, res: express.Response) {
+  public parkCar(req: express.Request) {
     let request = req.body || {};
     let car: Car = request;
 
-    try {
-      return this._parkingLotService.parkCar(car);
-    } catch (err) {
-      res.status(400).json({ error: err.message });
-    }
+    return this._parkingLotService.parkCar(car);
   }
 
   @httpPost(
@@ -38,12 +34,7 @@ export default class ParkingLotController {
     let request = req.body || {};
     let slot: ParkingSlot = request;
 
-    try {
-      this._parkingLotService.unparkCar(slot);
-    } catch (err) {
-      res.status(400).json({ error: err.message });
-    }
-
+    this._parkingLotService.unparkCar(slot);
     res.sendStatus(204);
   }
 
@@ -52,14 +43,10 @@ export default class ParkingLotController {
     query("number", "number is missing").not().isEmpty(),
     validateRequest()
   )
-  public getParkingSlotInfo(req: express.Request, res: express.Response) {
+  public getParkingSlotInfo(req: express.Request) {
     let request = req.query || {};
     let { number } = request;
 
-    try {
-      return this._parkingLotService.getParkingSlotInfo(number);
-    } catch (err) {
-      res.status(404).json({ error: err.message });
-    }
+    return this._parkingLotService.getParkingSlotInfo(number);
   }
 }

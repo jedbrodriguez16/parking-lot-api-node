@@ -28,7 +28,7 @@ export default class ParkingLotRepository implements IParkingLotRepository {
   }
 
   isCarAlreadyParked(carNumber: string): boolean {
-    let slotInfo = this._findSlotInfo(carNumber, true);
+    let slotInfo = this._findSlotInfoByCar(carNumber);
 
     return slotInfo !== null;
   }
@@ -44,15 +44,20 @@ export default class ParkingLotRepository implements IParkingLotRepository {
     return null;
   }
 
-  private _findSlotInfo(
-    slotOrCarNumber: string,
-    findByCarOnly: boolean = false
-  ): ParkingSlotInfoModel {
+  private _findSlotInfo(slotOrCarNumber: string): ParkingSlotInfoModel {
     // for loop has better performance
     for (let [key, value] of this._parkingSlots) {
-      if (findByCarOnly && value === slotOrCarNumber) {
+      if (key === slotOrCarNumber || value === slotOrCarNumber) {
         return new ParkingSlotInfoModel(key, value);
-      } else if (key === slotOrCarNumber || value === slotOrCarNumber) {
+      }
+    }
+    return null;
+  }
+
+  private _findSlotInfoByCar(carNumber: string): ParkingSlotInfoModel {
+    // for loop has better performance
+    for (let [key, value] of this._parkingSlots) {
+      if (value === carNumber) {
         return new ParkingSlotInfoModel(key, value);
       }
     }

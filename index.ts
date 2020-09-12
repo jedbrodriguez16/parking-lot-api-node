@@ -22,7 +22,7 @@ import "./controllers/ParkingLotController";
 // applyLimiter(app);
 // // end ****
 
-// start **** simple rate limit
+// start **** simple rate limit (might not be 100% accurate)
 import * as rateLimit from "express-rate-limit";
 const limiter = rateLimit({
   windowMs: 10000, // 10 seconds
@@ -35,7 +35,7 @@ app.use(limiter);
 // end **************** RATE LIMITING *************
 
 // @ts-ignore
-app.use(function (req, res, next) {
+app.use(function (req: any, res: any, next: any) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "*");
   res.header("Access-Control-Allow-Headers", "*");
@@ -49,6 +49,14 @@ server.setConfig((app) => {
     })
   );
   app.use(bodyParser.json());
+});
+
+// error handling
+server.setErrorConfig((app) => {
+  // @ts-ignore
+  app.use((err: any, req: any, res: any, next: any) =>
+    res.status(400).json({ error: err.message })
+  );
 });
 
 let serverInstance = server.build();
