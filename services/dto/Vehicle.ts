@@ -1,3 +1,3 @@
 export default abstract class Vehicle {
-  registrationNumber: string;
+  constructor(public registrationNumber: string) {}
 }

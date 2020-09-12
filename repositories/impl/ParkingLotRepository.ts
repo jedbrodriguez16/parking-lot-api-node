@@ -6,14 +6,14 @@ import ParkingSlotInfo from "../models/ParkingSlotInfo";
 export default class ParkingLotRepository implements IParkingLotRepository {
   // @ts-ignore
   assignSlot(carNumber: string): number {
-    throw new Error("Method not implemented.");
+    return 1;
   }
   // @ts-ignore
   freeSlot(slotNumber: number): boolean {
-    throw new Error("Method not implemented.");
+    return false;
   }
   // @ts-ignore
-  getSlotInfo(carOrSlotnumber: string): ParkingSlotInfo {
+  getSlotInfo(slotOrCarNumber: number | string): ParkingSlotInfo {
     return new ParkingSlotInfo(1, "car1");
   }
 }

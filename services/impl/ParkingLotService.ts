@@ -10,18 +10,24 @@ import ParkingSlotInfo from "../dto/ParkingSlotInfo";
 @injectable()
 export default class ParkingLotService implements IParkingLotService {
   @inject(types.IParkingLotRepository)
-  // @ts-ignore
   private readonly _parkingLotRepository: IParkingLotRepository;
-  // @ts-ignore
+
   parkCar(car: Car): ParkingSlot {
-    throw new Error("Method not implemented.");
+    let slotNumber = this._parkingLotRepository.assignSlot(
+      car.registrationNumber
+    );
+    return new ParkingSlot(slotNumber);
   }
-  // @ts-ignore
+
   unparkCar(slot: ParkingSlot): void {
-    throw new Error("Method not implemented.");
+    let isSlotValid = this._parkingLotRepository.freeSlot(slot.slotNumber);
+
+    if (!isSlotValid) {
+      throw new Error("Slot doesn't exist");
+    }
   }
-  // @ts-ignore
-  getParkingSlotInfo(number: string | number): ParkingSlotInfo {
-    return this._parkingLotRepository.getSlotInfo(number);
+
+  getParkingSlotInfo(slotOrCarNumber: number | string): ParkingSlotInfo {
+    return this._parkingLotRepository.getSlotInfo(slotOrCarNumber);
   }
 }
