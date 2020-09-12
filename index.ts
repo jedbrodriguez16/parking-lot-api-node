@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import * as express from "express";
+import app from "./app";
 import { InversifyExpressServer } from "inversify-express-utils";
 import * as bodyParser from "body-parser";
 
@@ -13,7 +13,26 @@ configureRepositories(iocContainer);
 // load controller
 import "./controllers/ParkingLotController";
 
-const app: express.Application = express();
+// start **************** RATE LIMITING *************
+
+// // start **** uncomment / use this section this for more robust and accurate solution for rate limiting, but you need to install and run redis server
+// // brew install redis
+// // redis-server
+// import applyLimiter from "./limiter";
+// applyLimiter(app);
+// // end ****
+
+// start **** simple rate limit
+import * as rateLimit from "express-rate-limit";
+const limiter = rateLimit({
+  windowMs: 10000, // 10 seconds
+  max: 10, // 10 requests
+  message: "Too many requests. Please try again later...",
+});
+app.use(limiter);
+// end ****
+
+// end **************** RATE LIMITING *************
 
 // @ts-ignore
 app.use(function (req, res, next) {
