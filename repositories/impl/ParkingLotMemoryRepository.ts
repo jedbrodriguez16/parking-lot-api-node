@@ -12,6 +12,7 @@ export default class ParkingLotRepository implements IParkingLotRepository {
   }
 
   assignSlot(slotNumber: string, carNumber: string): void {
+    // since nodejs is single-threaded, there's no need to do locking of code
     this._parkingSlots.set(slotNumber, carNumber);
   }
 

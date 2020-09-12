@@ -5,13 +5,19 @@ import IParkingLotService from "../services/IParkingLotService";
 import * as express from "express";
 import Car from "../services/dto/Car";
 import ParkingSlot from "../services/dto/ParkingSlot";
+import { body, query } from "express-validator";
+import validateRequest from "./validateRequest";
 
 @controller("/api")
 export default class ParkingLotController {
   @inject(types.IParkingLotService)
   private readonly _parkingLotService: IParkingLotService;
 
-  @httpPost("/car/park")
+  @httpPost(
+    "/car/park",
+    body("registrationNumber", "registrationNumber is missing").not().isEmpty(),
+    validateRequest()
+  )
   public parkCar(req: express.Request, res: express.Response) {
     let request = req.body || {};
     let car: Car = request;
@@ -23,7 +29,11 @@ export default class ParkingLotController {
     }
   }
 
-  @httpPost("/car/unpark")
+  @httpPost(
+    "/car/unpark",
+    body("slotNumber", "slotNumber is missing").not().isEmpty(),
+    validateRequest()
+  )
   public unparkCar(req: express.Request, res: express.Response) {
     let request = req.body || {};
     let slot: ParkingSlot = request;
@@ -37,7 +47,11 @@ export default class ParkingLotController {
     res.sendStatus(204);
   }
 
-  @httpGet("/slot/info")
+  @httpGet(
+    "/slot/info",
+    query("number", "number is missing").not().isEmpty(),
+    validateRequest()
+  )
   public getParkingSlotInfo(req: express.Request, res: express.Response) {
     let request = req.query || {};
     let { number } = request;
