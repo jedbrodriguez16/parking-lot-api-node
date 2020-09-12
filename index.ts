@@ -4,6 +4,11 @@ import { InversifyExpressServer } from "inversify-express-utils";
 import * as bodyParser from "body-parser";
 
 import iocContainer from "./iocContainer";
+import configureServices from "./services/ioc";
+import configureRepositories from "./repositories/ioc";
+
+configureServices(iocContainer);
+configureRepositories(iocContainer);
 
 // load controller
 import "./controllers/ParkingLotController";

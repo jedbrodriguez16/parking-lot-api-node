@@ -1,3 +1,3 @@
 export default class ParkingSlotInfo {
-  constructor(public carNumber: string, public slotNumber: number) {}
+  constructor(public slotNumber: number, public carNumber: string) {}
 }
