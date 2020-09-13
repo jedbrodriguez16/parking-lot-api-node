@@ -6,6 +6,7 @@ import * as bodyParser from "body-parser";
 import iocContainer from "./iocContainer";
 import configureServices from "./services/ioc";
 import configureRepositories from "./repositories/ioc";
+import BusinessRuleException from "./services/exception/BusinessRuleException";
 
 configureServices(iocContainer);
 configureRepositories(iocContainer);
@@ -54,9 +55,17 @@ server.setConfig((app) => {
 // error handling
 server.setErrorConfig((app) => {
   // @ts-ignore
-  app.use((err: any, req: any, res: any, next: any) =>
-    res.status(400).json({ error: err.message })
-  );
+  app.use((err: any, req: any, res: any, next: any) => {
+    let status = "500";
+    if (err instanceof BusinessRuleException) {
+      status = "400";
+    }
+
+    res.status(status);
+    res.send({
+      error: err.message,
+    });
+  });
 });
 
 let serverInstance = server.build();

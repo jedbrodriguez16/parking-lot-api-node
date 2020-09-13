@@ -8,6 +8,7 @@ import ParkingSlot from "../dto/ParkingSlot";
 import ParkingSlotInfo from "../dto/ParkingSlotInfo";
 
 import { plainToClass } from "class-transformer";
+import BusinessRuleException from "../exception/BusinessRuleException";
 
 @injectable()
 export default class ParkingLotService implements IParkingLotService {
@@ -21,14 +22,16 @@ export default class ParkingLotService implements IParkingLotService {
     );
 
     if (isAlreadyParked) {
-      throw new Error(
+      throw new BusinessRuleException(
         `The car with number ${carNumber} is already parked. Please unpark / free its slot first before parking again.`
       );
     } else {
       let slotNumber = this._parkingLotRepository.getNearestAvailableSlot();
 
       if (slotNumber === null) {
-        throw new Error("Sorry, there's no more available slots.");
+        throw new BusinessRuleException(
+          "Sorry, there's no more available slots."
+        );
       }
 
       this._parkingLotRepository.assignSlot(slotNumber, car.registrationNumber);
@@ -40,7 +43,7 @@ export default class ParkingLotService implements IParkingLotService {
     let slotNumber = slot.slotNumber || null;
 
     if (!this._parkingLotRepository.isValidSlot(slotNumber)) {
-      throw new Error("Slot number cannot be found.");
+      throw new BusinessRuleException("Slot number cannot be found.");
     }
 
     this._parkingLotRepository.freeSlot(slotNumber);
@@ -52,7 +55,7 @@ export default class ParkingLotService implements IParkingLotService {
     );
 
     if (slotInfo === null) {
-      throw new Error("Slot or Car number cannot be found.");
+      throw new BusinessRuleException("Slot or Car number cannot be found.");
     }
 
     // simple repo model to dto mapping
