@@ -23,7 +23,7 @@ import "./controllers/ParkingLotController";
 // applyLimiter(app);
 // // end ****
 
-// start **** simple rate limit (might not be 100% accurate)
+// start **** simple rate limit (might not be 100% accurate), comment this section if you uncomment the redis implementation right above
 import * as rateLimit from "express-rate-limit";
 const limiter = rateLimit({
   windowMs: 10000, // 10 seconds
